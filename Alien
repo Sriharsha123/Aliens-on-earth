@@ -1,0 +1,74 @@
+Aliens-on-earth
+===============
+import java.util.Scanner;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.pdf.PdfWriter;
+
+import java.io.FileOutputStream;
+import java.io.FileNotFoundException;
+
+public class Alien {
+	
+		public static void main (String[] args) {
+			
+			/* take input details */
+			
+			System.out.println("Please enter the Alien details \n");
+			System.out.println("Enter Alien Code Name \n");
+			Scanner scan = new Scanner(System.in);
+			String codename = scan.next();    //input Alien code name
+			System.out.println("Enter Alien Blood Color \n");
+			String bloodcolor = scan.next();  //input Alien blood color
+			System.out.println("Enter No. of Antennas\n");
+			int antennas = scan.nextInt();  // input No. of Antennas
+			System.out.println("Enter No. of Legs \n");
+			int legs = scan.nextInt();  // input No. of Legs
+			System.out.println("Enter Alien Home Planet\n");
+			String home = scan.next();  // input Alien Home Planet
+			String details = "Alien Details \n";
+			// concatenate 
+			String text = codename + bloodcolor + antennas + legs + home ;
+			
+			System.out.println("Please enter the format u want \n");
+			System.out.println("0: for text 1: for pdf \n");
+			int flag = scan.nextInt(); // select the format to export the content
+			
+			if(flag==0)
+			{
+			 try {
+		          File file = new File("Alien.txt"); //creates new text file Alien.txt
+		          BufferedWriter output = new BufferedWriter(new FileWriter(file));
+		          output.write(details); // writes the content in details to Alien.txt
+		          output.write(text); // writes the content in text to Alien.txt
+		          output.close();
+		        } catch ( IOException e ) {       // IOException is handle if occured
+		           e.printStackTrace();
+		        }
+			}
+			else
+			{
+		        Document document = new Document(); // creation of the document 
+
+		        try {
+		            PdfWriter.getInstance(document,
+		                new FileOutputStream("Alien.pdf")); //creates writer & creates new pdf file alien.pdf
+
+		            document.open(); // Alien.pdf is opened
+		            document.add(new Paragraph(details));  // contents are written to file
+		            document.add(new Paragraph(text));
+		            document.close(); 
+		        } catch (DocumentException e) { // DocumentException is handle if occured
+		            e.printStackTrace();
+		        } catch (FileNotFoundException e) { //FileNotFoundException is handle if occured
+		            e.printStackTrace();
+		        }
+		   }
+		}
+	}
